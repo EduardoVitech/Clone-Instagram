@@ -14,15 +14,14 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
-    required Uint8List file,
+    //required Uint8List file,
   }) async {
     String res = "Some error occurred";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
-          bio.isNotEmpty ||
-          file != null) {
+          bio.isNotEmpty) {
         //register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
@@ -38,7 +37,8 @@ class AuthMethods {
           'followers': [],
           'following': [],
         });
-        res = "success like";
+
+        res = "success";
       }
     } catch (err) {
       res = err.toString();

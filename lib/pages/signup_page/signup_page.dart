@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/resources/auth_methods/auth_methods.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
 import 'package:instagram_clone/widgets/text_field_input/text_field_input.dart';
 
@@ -24,6 +25,8 @@ class _SignupPageState extends State<SignupPage> {
     _bioController.dispose();
     _usernameController.dispose();
   }
+
+  void selectedImage() {}
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                     bottom: -10,
                     left: 80,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectedImage,
                       icon: const Icon(
                         Icons.add_a_photo,
                       ),
@@ -99,6 +102,15 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 24),
               //button login
               InkWell(
+                onTap: () async {
+                  String res = await AuthMethods().SignUpUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                    bio: _bioController.text,
+                  );
+                  print(res);
+                },
                 child: Container(
                   child: const Text('Log in'),
                   width: double.infinity,
