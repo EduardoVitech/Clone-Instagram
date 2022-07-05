@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_methods/auth_methods.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
+import 'package:instagram_clone/utils/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input/text_field_input.dart';
 
 class SignupPage extends StatefulWidget {
@@ -16,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -26,7 +31,12 @@ class _SignupPageState extends State<SignupPage> {
     _usernameController.dispose();
   }
 
-  void selectedImage() {}
+  void selectedImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +58,21 @@ class _SignupPageState extends State<SignupPage> {
                 color: primaryColor,
                 height: 64,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               //circular widget to accept and show our selected file
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80',
-                    ),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                            'https://cdn130.picsart.com/318381621277201.jpg',
+                          ),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
@@ -70,7 +85,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               //textfield for username
               TextFieldInput(
                 textEditingController: _usernameController,
