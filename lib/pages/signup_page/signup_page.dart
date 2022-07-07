@@ -21,6 +21,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -36,6 +37,27 @@ class _SignupPageState extends State<SignupPage> {
     setState(() {
       _image = im;
     });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().SignUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    }
   }
 
   @override
@@ -117,18 +139,8 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 24),
               //button login
               InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().SignUpUser(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    username: _usernameController.text,
-                    bio: _bioController.text,
-                    file: _image!,
-                  );
-                  print(res);
-                },
+                onTap: signUpUser,
                 child: Container(
-                  child: const Text('Log in'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -140,6 +152,13 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     color: blueColor,
                   ),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text('Sign up'),
                 ),
               ),
               const SizedBox(height: 12),
@@ -155,7 +174,7 @@ class _SignupPageState extends State<SignupPage> {
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
-                    child: const Text("Don't have an account?"),
+                    child: const Text("Have an account?"),
                   ),
                   GestureDetector(
                     onTap: () {},
@@ -164,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
                         vertical: 8,
                       ),
                       child: const Text(
-                        "Sign up.",
+                        "Login.",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

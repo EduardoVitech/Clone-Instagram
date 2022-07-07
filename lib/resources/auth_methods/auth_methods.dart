@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -52,4 +51,33 @@ class AuthMethods {
     }
     return res;
   }
+
+  // logging in user
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Sone error occurred";
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }
+
+ /* on FirebaseAuthException catch (err) {
+      if (err.code == 'invalid-email') {
+        res = 'The email is badly formated.';
+      } else if (err.code == 'weak-password') {
+        res = 'Password should be at least 6 characters';
+      }
+    } */

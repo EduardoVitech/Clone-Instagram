@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/pages/home_page/home_page.dart';
+import 'package:instagram_clone/resources/auth_methods/auth_methods.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
+import 'package:instagram_clone/utils/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input/text_field_input.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,12 +16,37 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (res == "success") {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      //
+      showSnackBar(res, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -59,8 +87,8 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 24),
               //button login
               InkWell(
+                onTap: loginUser,
                 child: Container(
-                  child: const Text('Log in'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -72,12 +100,19 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     color: blueColor,
                   ),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text('Log in'),
                 ),
               ),
               const SizedBox(height: 12),
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               ),
               //transitioing to sing up
               Row(
@@ -96,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                         vertical: 8,
                       ),
                       child: const Text(
-                        "Login.",
+                        "Sign up.",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
