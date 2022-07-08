@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/pages/home_page/home_page.dart';
 import 'package:instagram_clone/resources/auth_methods/auth_methods.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
 import 'package:instagram_clone/utils/utils/utils.dart';
@@ -35,11 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (res == "success") {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
+      //
     } else {
       //
       showSnackBar(res, context);
