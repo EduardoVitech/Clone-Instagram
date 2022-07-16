@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/models/user/user.dart';
+import 'package:instagram_clone/providers/user/user_providder.dart';
+import 'package:instagram_clone/resources/firestore_methods/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/comment_card/comment_card.dart';
 
 class CommentPage extends StatefulWidget {
-  const CommentPage({super.key});
+  final snap;
+  const CommentPage({super.key, required this.snap});
 
   @override
   State<CommentPage> createState() => _CommentPageState();
@@ -13,6 +18,8 @@ class CommentPage extends StatefulWidget {
 class _CommentPageState extends State<CommentPage> {
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -31,7 +38,7 @@ class _CommentPageState extends State<CommentPage> {
             children: [
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1470434767159-ac7bf1b43351?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+                  user.photoUrl,
                 ),
                 radius: 18,
               ),
@@ -40,14 +47,22 @@ class _CommentPageState extends State<CommentPage> {
                   padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Comment as username',
+                      hintText: 'Comment as ${user.username}',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await FirestoreMethods().postComment(
+                    widget.snap['postId'],
+                    widget.snap['text'],
+                    user.uid,
+                    user.username,
+                    user.photoUrl,
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   child: const Text(
