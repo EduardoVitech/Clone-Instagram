@@ -5,6 +5,7 @@ import 'package:instagram_clone/pages/profile_page/profile_page.dart';
 import 'package:instagram_clone/utils/colors/colors.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/utils/global_variables/global_variables.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -95,13 +96,20 @@ class _SearchPageState extends State<SearchPage> {
                   itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) => Image.network(
                     (snapshot.data! as dynamic).docs[index]['postUrl'],
+                    fit: BoxFit.cover,
                   ),
-                  staggeredTileBuilder: (index) => StaggeredTile.count(
-                    (index % 7 == 0) ? 2 : 1,
-                    (index % 7 == 0) ? 2 : 1,
-                  ),
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
+                  staggeredTileBuilder: (index) =>
+                      MediaQuery.of(context).size.width > webPageSize
+                          ? StaggeredTile.count(
+                              (index % 7 == 0) ? 1 : 1,
+                              (index % 7 == 0) ? 1 : 1,
+                            )
+                          : StaggeredTile.count(
+                              (index % 7 == 0) ? 2 : 1,
+                              (index % 7 == 0) ? 2 : 1,
+                            ),
+                  mainAxisSpacing: 3.0,
+                  crossAxisSpacing: 3.0,
                 );
               },
             ),

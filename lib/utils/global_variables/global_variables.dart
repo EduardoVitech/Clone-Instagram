@@ -8,7 +8,7 @@ import 'package:instagram_clone/pages/search_page/search_page.dart';
 const webPageSize = 600;
 
 List<Widget> homePageItems = [
-  const FeedPage(),
+  FeedPage(),
   const SearchPage(),
   const AddPostPage(),
   const Text('notif'),
