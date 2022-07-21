@@ -88,4 +88,8 @@ class FirestoreMethods {
       print(err.toString());
     }
   }
+
+  Future<void> followUser() async {
+    //
+  }
 }
