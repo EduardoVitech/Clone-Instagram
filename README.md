@@ -1,16 +1,33 @@
-# instagram_clone
+# Clone do Instagram
 
-A new Flutter project.
+Clone do aplicativo instagram desenvolvido em Flutter.
 
-## Getting Started
+![Instagram](./assets/ic_instagram.svg)
 
-This project is a starting point for a Flutter application.
+# Mobile
 
-A few resources to get you started if this is your first Flutter project:
+- ## Login
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  - ![Tela de Login](./assets/LOGIN-MOBILE.PNG)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ## Cadastro
+  - ![Cadastro](./assets/CADASTRO-MOBILE.PNG)
+
+- ## Feed
+  - ![Feed](./assets/FEED-MOBILE.PNG)
+
+- ## Perfil
+  - ![Perfil](./assets/PERFIL-MOBILE.PNG)
+
+- ## Pesquisa
+  - ![Pesquisa](./assets/PESQUISA-MOBILE.PNG)
+
+
+# Web
+
+- ## Pesquisa
+
+  - ![Tela de Login](./assets/PESQUISA-WEB.PNG)
+
+- ## Feed
+  - ![Feed](./assets/FEED-WEB.PNG)
