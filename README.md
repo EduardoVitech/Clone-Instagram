@@ -21,7 +21,12 @@ Clone do aplicativo instagram desenvolvido em Flutter.
 
 - ## Pesquisa
   - ![Pesquisa](./assets/PESQUISA-MOBILE.PNG)
+  - 
+  - ![Pesquisa](./assets/PESQUISA2-MOBILE.PNG)
 
+- ## Post
+  - ![Post](./assets/POST-MOBILE.PNG)
+  - 
 
 # Web
 
